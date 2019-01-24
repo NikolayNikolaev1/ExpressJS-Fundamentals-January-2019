@@ -14,7 +14,7 @@ module.exports = (req, res) => {
             result += '<ul>';
 
             for (let movie of database) {
-               result += `<a><img class="moviePoster" src="${movie.moviePoster}"></a>`;
+               result += `<a href="/movies/details/${movie.id}"><img class="moviePoster" src="${movie.moviePoster}"></a>`;
             }
 
             result += '</ul>';

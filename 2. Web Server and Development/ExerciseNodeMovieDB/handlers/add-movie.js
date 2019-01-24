@@ -38,8 +38,6 @@ module.exports = (req, res) => {
         
         req.on('end', () => {
             let movie = qs.parse(dataString);
-            console.log(movie);
-            
 
             if (movie.movieTitle === "" || movie.moviePoster === "") {
                 loadPage(res, (data) => {
@@ -51,10 +49,6 @@ module.exports = (req, res) => {
                     return data = data.toString()
                         .replace('{{content}}','<div id="succssesBox"><h2 id="succssesMsg">Movie Added</h2></div>');
                 });
-
-                console.log(movie);
-                console.log('test');
-                
                 
                 database.push(movie);
             }
