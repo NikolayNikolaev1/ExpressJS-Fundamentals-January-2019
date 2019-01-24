@@ -1,5 +1,6 @@
 const homeHandler = require('./home');
 const staticHandler = require('./static-files');
-const moviesHandler = require('./all-movies');
+const displayMoviesHandler = require('./all-movies');
+const addMovieHandler = require('./add-movie');
 
-module.exports = [ homeHandler, staticHandler, moviesHandler ];
+module.exports = [ homeHandler, staticHandler, displayMoviesHandler, addMovieHandler ];
