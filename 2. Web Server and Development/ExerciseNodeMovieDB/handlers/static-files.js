@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
-const errorHandler = require('./error-handler')
 
 function getContentType(path) {
     if (path.endsWith('.css')) {
@@ -13,26 +11,30 @@ function getContentType(path) {
     } else if (path.endsWith('.jpg')) {
         return 'image/jpeg';
     }
+
+    return 'text/plain';
 }
 
 module.exports = (req, res) => {
-    req.pathname = req.pathname || url.parse(req.url).pathname;
-  
-    if(req.pathname.startsWith('/public/') && req.method === 'GET') {
-        let filePath = path.normalize(path.join(__dirname, `..${req.pathname}`));
-        let stream = fs.createReadStream(filePath);
-  
-        stream.on('error',(err) => {
-            errorHandler(err, res);
-            return; 
-        })
-  
-        res.writeHead(200, {
-            'Content-Type': getContentType(req.pathname)
-         });
-  
-         stream.pipe(res);
-    }else {
-        return true;
+    if (req.path.startsWith('/public') && req.method === 'GET') {
+        fs.readFile(path.join(__dirname, `../${req.path}`), 'utf8', (err, data) => {
+            if (err) {
+                res.writeHead(404, {
+                    'Content-Type': getContentType(req.path)
+                });
+
+                res.write('404 The page is not Found!');
+                res.end();
+                return;
+            }
+
+            res.writeHead(200, {
+                'Content-Type': getContentType(req.path)
+            });
+
+
+            res.write(data);
+            res.end();
+        });
     }
-}
+};

@@ -1,26 +1,19 @@
-const url = require('url');
 const fs = require('fs');
 const path = require('path');
-const errorHandler = require('./error-handler')
 
-module.exports = (req, res) => {
-    req.pathname = req.pathname || url.parse(req.url).pathname;
+module.exports = (req,res) => {
+    if(req.path === '/'){
+        fs.readFile(path.join(__dirname,'../views/home.html'), (err,data) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
 
-    if(req.pathName === '/' && req.method === 'GET') {
-        let filePath = path.normalize(path.join(__dirname, '../views/home.html'));
-        let stream = fs.createReadStream(filePath);
-    
-        stream.on('error',(err) => {
-          errorHandler(err, res);
-          return;
-        })
-    
-        res.writeHead(200, {
-          'Content-Type': 'text/html',
+            res.writeHead(200, {
+                'Content-Type': 'text/html'
+            });
+            res.write(data);
+            res.end();
         });
-    
-        stream.pipe(res);
-    } else {
-        return true;
     }
-}
+};
