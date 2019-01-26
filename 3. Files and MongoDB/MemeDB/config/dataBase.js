@@ -11,6 +11,7 @@ let load = () =>{
         return
       }  
       db = JSON.parse(data)
+      
       res(db)
     })
   })
