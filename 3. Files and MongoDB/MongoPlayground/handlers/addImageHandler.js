@@ -1,3 +1,5 @@
+const url = require('url');
+const qs = require('querystring');
 const formidable = require('formidable');
 const Image = require('mongoose').model('Image');
 
@@ -50,5 +52,23 @@ function addImage(req, res) {
         console.log(err.errors);
       });
 
+  });
+}
+
+function deleteImg(req, res){
+  let urlParts = url.parse(req.url, true);
+  let id = urlParts.query.id
+
+  
+  console.log(Image.findByIdAndRemove(id));
+  Image.findByIdAndDelete(id)
+  .then(() => {
+    res.writeHead(302, {
+      location: '/'
+    });
+    res.end();
+  })
+  .catch((err) => {
+    console.log(err.errors);
   });
 }
