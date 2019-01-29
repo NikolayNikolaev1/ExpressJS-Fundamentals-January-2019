@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const handlers = require('./handlers/handlerBlender');
 
 require('./config/db')();
+//INSTALL PACKAGES!
 
 http
   .createServer((req, res) => {

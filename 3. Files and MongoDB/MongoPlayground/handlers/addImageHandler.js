@@ -59,8 +59,6 @@ function deleteImg(req, res){
   let urlParts = url.parse(req.url, true);
   let id = urlParts.query.id
 
-  
-  console.log(Image.findByIdAndRemove(id));
   Image.findByIdAndDelete(id)
   .then(() => {
     res.writeHead(302, {
