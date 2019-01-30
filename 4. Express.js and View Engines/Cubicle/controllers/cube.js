@@ -1,17 +1,31 @@
 const Cube = require('../models/Cube');
 
+function handleErrors(err,res,cubeBody) {
+    let errors = [];
+
+    for (let property in err.errors) {
+        errors.push(err.errors[property].message);
+    }
+
+    res.locals.globalErrors = errors;
+    res.render('cube/create',cubeBody);
+}
+
 module.exports = {
     createGet: (req, res) => {
         res.render('cube/create');
     },
     createPost: (req, res) => {
-        let cubeBody = req.body;
+        const cubeBody = req.body;
         cubeBody.difficulty = Number(cubeBody.difficulty);
 
-        Cube.create(cubeBody)
-            .then((c) => {
-
+        Cube
+            .create(cubeBody)
+            .then((cube) => {
                 res.redirect('/');
+            })
+            .catch(err => {
+                handleErrors(err,res,cubeBody);
             });
     },
     details: (req, res) => {

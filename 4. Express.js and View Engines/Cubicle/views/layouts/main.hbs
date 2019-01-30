@@ -19,6 +19,9 @@
       </ul>
     </header>
     <main>
+      {{#each globalErrors}}
+        <span class="error">{{this}}</span>
+      {{/each}}
     {{{body}}}
     </main>
   </div>
