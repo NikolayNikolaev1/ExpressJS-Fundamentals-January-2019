@@ -23,8 +23,8 @@ cubeSchema.path('imageUrl')
     }, 'Image URL must starts with http and ends with .jpg or .png!');
 cubeSchema.path('difficulty')
     .validate(function() {
-        return this.difficulty.length >= 1 && this.difficulty.length <= 6;
+        return this.difficulty >= 1 && this.difficulty <= 6;
     }, 'Difficulty must be between 1 and 6!');
 
-    const Cube = model('Cube', cubeSchema);
-    module.exports = Cube;
+const Cube = mongoose.model('Cube', cubeSchema);
+module.exports = Cube;
