@@ -1,5 +1,6 @@
 const encryption = require('../util/encryption');
 const User = require('../models/User');
+const Rent = require('../models/Rent');
 
 module.exports = {
     registerGet: (req, res) => {
@@ -83,5 +84,13 @@ module.exports = {
             reqUser.error = e;
             res.render('user/login', reqUser);
         }
+    },
+    myRents: (req, res) => {
+        Rent.find({ user: req.user._id })
+            .populate('car')
+            .then((rents) => {
+                res.render('user/rented', rents);
+            })
+            .catch(console.error);
     }
 };
