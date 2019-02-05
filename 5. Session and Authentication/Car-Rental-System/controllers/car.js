@@ -57,9 +57,40 @@ module.exports = {
        .catch(console.error);
     },
     editGet: (req, res) => {
-
+        let id = req.params.id;
+        Car
+            .findById(id)
+            .then(car => {
+                if (!car) {
+                    res.sendStatus('404');
+                    return;
+                }
+    
+                res.render('car/edit', {
+                    car
+                });
+            });
     },
     editPost: (req, res) => {
+    let id = req.params.id;
+    let editedCar = req.body;
 
+    Car
+        .findById(id)
+        .then((car) => {
+            if (!car) {
+                res.redirect(`/?error=${encodeURIComponent('Product was not found!')}`);
+                return;
+            }
+            
+            car.model = editedCar.model;
+            car.image = editedCar.image;
+            car.pricePerDay = editedCar.pricePerDay;
+
+            car.save().then(() => {
+                res.redirect('/?success=' + encodeURIComponent('Product was edited successfully'));
+        })
+    })
+        
     }
 }
