@@ -21,22 +21,22 @@
                     </button>
                 </div>
                 
-                {{!-- TODO DISPLAY ONLY IF LOGGED --}}
-                {{!-- <div class="navbar-collapse collapse">
+                {{#if user}}
+                <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/user/details">Welcome</a></li>
                         <li><a href="/article/create">New Article</a></li>
                         <li><a href="/user/logout">Logout</a></li>
                     </ul>
-                </div> --}}
-
-                {{!-- TODO DISPLAY ONLY IF NOT LOGGED --}}
+                </div>
+                {{else}}
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/user/register">Register</a></li>
                         <li><a href="/user/login">Login</a></li>
                     </ul>
                 </div>
+                {{/if}}
             </div>
         </div>
     </header>

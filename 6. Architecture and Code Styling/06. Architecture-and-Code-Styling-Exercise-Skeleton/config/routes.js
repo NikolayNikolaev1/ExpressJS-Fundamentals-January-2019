@@ -1,15 +1,23 @@
-const homeController = require('../controllers/home');
-const userController = require('../controllers/user');
+const auth = require('../config/auth');
+const controller = require('../controllers/index');
 
 module.exports = (app) => {
-    app.get('/', homeController.index);
-    app.get('/user/register', userController.registerGet);
-    app.post('/user/register', userController.registerPost);
+    app.get('/', controller.home.index);
 
-    app.get('/user/login', userController.loginGet);
-    app.post('/user/login', userController.loginPost);
-
-    app.get('/user/logout', userController.logout);
-    //TODO Add other app routes and restrict certain pages using auth.js
+    // User routes
+    app.get('/user/register', auth.isAnonymous, controller.user.registerGet);
+    app.post('/user/register', auth.isAnonymous, controller.user.registerPost);
+    app.get('/user/login', auth.isAnonymous, controller.user.loginGet);
+    app.post('/user/login', auth.isAnonymous, controller.user.loginPost);
+    app.get('/user/logout', auth.isAuthed, controller.user.logout);
+    
+    // Article routes
+    app.get('/article/create', auth.isAuthed, controller.article.createGet);
+    app.post('/article/create', auth.isAuthed, controller.article.createPost);
+    app.get('/article/details/:id', controller.article.details);
+    app.get('/article/edit/:id', controller.article.editGet);
+    app.post('/article/edit/:id', controller.article.editPost);
+    app.get('/article/delete/:id', controller.article.deleteGet);
+    app.get('/article/delete/:id', controller.article.deletePost);
 };
 
