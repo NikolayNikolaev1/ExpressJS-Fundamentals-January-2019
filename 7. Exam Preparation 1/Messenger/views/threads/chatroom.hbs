@@ -1,0 +1,22 @@
+<h1>Chatroom with {{username}}</h1>
+<form method="post" class="chat-form" action="/block/gosho">
+    <button class="btn btn-danger">Block</button>
+</form>
+<div class="chat-wrapper">
+    <div id="message-wrapper">
+        {{#each messages}}
+        <div class="message-row">
+            {{#if isMine}}
+            <span class="thread-message right">{{content}}</span>
+            {{else}}
+            <span class="thread-message left">{{content}}</span>
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
+    <form method="post" class="chat-form">
+        <textarea rows="5" name="message" placeholder="message"></textarea>
+        <input value="{{id}}" name="threadId" hidden />
+        <button class="btn btn-primary send">Send</button>
+    </form>
+</div>
