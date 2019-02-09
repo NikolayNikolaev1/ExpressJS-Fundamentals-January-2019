@@ -47,15 +47,32 @@ module.exports = {
             });
 
             messages.forEach(message => {
-                if (message.user.toString() === req.user._id.toString()) {
+                if (message.user.toString() !== req.user._id.toString()) {
                     message.isMine = true;
                 }
-            })
+
+                if (message.content.startsWith('http') && message.content.endsWith('.jpg')) {
+                    message.isImage = true;
+                }
+            });
+
+            let isBlocked = false;
+            let amBlocked = false;
+
+            if (otherUser.blockedUsers.includes(req.user.username)) {
+                amBlocked = true;
+            }
+
+            if (req.user.blockedUsers.includes(req.params.username)) {
+                 isBlocked = true;
+            }
 
             res.render('threads/chatroom', {
                 username: req.params.username,
                 messages,
-                id: thread._id
+                id: thread._id,
+                isBlocked,
+                amBlocked
             });
         } catch (e) {
             console.log(e);

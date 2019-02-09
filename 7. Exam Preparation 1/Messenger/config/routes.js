@@ -8,6 +8,8 @@ module.exports = app => {
     app.get('/users/logout', controllers.user.logout);
     app.get('/users/login', controllers.user.loginGet);
     app.post('/users/login', controllers.user.loginPost);
+    app.post('/block/:username', controllers.user.blockUser);
+    app.post('/unblock/:username', controllers.user.unblockUser);
 
     app.post('/threads/find', controllers.thread.findThread);
     app.get('/thread/:username', controllers.thread.openThread);
