@@ -14,6 +14,7 @@ module.exports = app => {
     app.post('/threads/find', controllers.thread.findThread);
     app.get('/thread/:username', controllers.thread.openThread);
     app.post('/thread/:username', controllers.thread.sendMessage);
+    app.post('/threads/remove/:threadId', controllers.thread.removeThread);
 
     app.all('*', (req, res) => {
         res.status(404);

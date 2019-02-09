@@ -96,5 +96,16 @@ module.exports = {
         } catch (e) {
             console.log(e);
         }
+    },
+    removeThread: async (req, res) => {
+        try {
+            await Message.remove({
+                thread: req.params.threadId
+            });
+            await Thread.findByIdAndRemove(req.params.threadId);
+            res.redirect('/');
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
