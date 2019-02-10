@@ -1,9 +1,11 @@
 const home = require('./home-controller');
 const user = require('./user-controller');
-const article = require('./article-controller');
+const team = require('./team-controller');
+const project = require('./project-controller');
 
 module.exports = {
     home,
     user,
-    article
+    team,
+    project
 };

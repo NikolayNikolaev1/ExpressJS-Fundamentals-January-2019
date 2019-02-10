@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 const encryption = require('../util/encryption');
 
 const userSchema = new mongoose.Schema({
-    email: { type: mongoose.Schema.Types.String, required: true, unique: true },
+    username: { type: mongoose.Schema.Types.String, required: true, unique: true },
     hashedPass: { type: mongoose.Schema.Types.String, required: true },
+    firstName: { type: mongoose.Schema.Types.String, required: true },
+    lastName: { type: mongoose.Schema.Types.String, required: true },
+    profilePicture: { type: mongoose.Schema.Types.String, default: 'https://themes.gohugo.io//theme/hugo-geo//img/profile.png' },
+    teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
     salt: { type: mongoose.Schema.Types.String, required: true },
-    roles: [{ type: mongoose.Schema.Types.String }],
-    edits: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Edit' }]
+    roles: [{ type: mongoose.Schema.Types.String }]
 });
 
 userSchema.method({
@@ -24,7 +27,9 @@ User.seedAdminUser = async () => {
         const salt = encryption.generateSalt();
         const hashedPass = encryption.generateHashedPassword(salt, 'admin');
         return User.create({
-            email: 'admin@admin.com',
+            username: 'admin',
+            firstName: 'Admin',
+            lastName: 'Admin',
             salt,
             hashedPass,
             roles: ['Admin']
